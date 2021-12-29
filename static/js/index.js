@@ -18,6 +18,15 @@ const takeScreenshot = () => {
                 .drawImage(video, 0, 0, canvas.width, canvas.height);
             const dataUrl = canvas.toDataURL();
             image.src = dataUrl;
+
+            fetch('http://localhost:8080/game', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: dataUrl
+            }).then(res => console.log(res));
         } else {
             countdown.innerHTML = count;
             count--;
