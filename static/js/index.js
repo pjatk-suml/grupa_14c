@@ -21,12 +21,15 @@ const takeScreenshot = () => {
 
             fetch('http://localhost:8080/game', {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
                 },
                 body: dataUrl
-            }).then(res => console.log(res));
+            })
+                .then(response => response.text())
+                .then(data => console.log(data));
         } else {
             countdown.innerHTML = count;
             count--;
