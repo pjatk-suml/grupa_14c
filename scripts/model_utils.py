@@ -1,16 +1,16 @@
 import os
 
-from keras.models import load_model
-from PIL import Image, ImageOps
 import numpy as np
+from PIL import Image, ImageOps
+from keras.models import load_model
 
-options = ['paper', 'scissors', 'rock']
+from scripts.dto.game_response import GameOption
 
 
 # TODO: first version, needs refactor
 def predict_option_from_image():
     # TODO: model needs to be trained better. It also takes really long to load - should it be stored in memory all the time?
-    model = load_model('scripts/model/keras_model.h5')
+    model = load_model('model/keras_model.h5')
 
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     image = Image.open('image.bmp')
@@ -24,4 +24,4 @@ def predict_option_from_image():
     prediction = model.predict(data)
     max_index = prediction.argmax()
     os.remove('image.bmp')
-    return options[max_index]
+    return GameOption(max_index)
