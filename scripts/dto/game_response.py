@@ -12,6 +12,7 @@ class GameResponse:
 
 
 class GameOption(Enum):
-    PAPER = 0
-    SCISSORS = 1
-    ROCK = 2
+    ROCK = 0
+    PAPER = 1
+    SCISSORS = 2
+    NOTHING = 3
