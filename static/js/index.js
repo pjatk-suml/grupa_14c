@@ -19,6 +19,7 @@ const takeScreenshot = () => {
             const dataUrl = canvas.toDataURL();
             image.src = dataUrl;
 
+            //TODO: get localhost dynamically
             fetch('http://localhost:8080/game', {
                 method: 'POST',
                 mode: 'no-cors',
@@ -29,8 +30,8 @@ const takeScreenshot = () => {
                 body: dataUrl
             })
                 .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.log(error));
+                .then(data => console.log(data)) //TODO: handle response
+                .catch(error => alert(error.message));
         } else {
             countdown.innerHTML = count;
             count--;

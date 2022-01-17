@@ -1,7 +1,13 @@
 # Rock-paper-scissors webcam game
 
-## Requirements:
+## Installation:
+To install application run 
+`conda env create -f environment.yml`
 
+
+## Dependencies:
+
+* `numpy`
 * `flask`
 * `PIL`
 * `keras`
