@@ -1,4 +1,5 @@
 import json
+import time
 
 from flask import Flask, render_template, request, Response
 
@@ -16,8 +17,10 @@ def main_page():
 
 @app.route('/game', methods=['POST'])
 def game():
-    create_file(request)
-    user_option = predict_option_from_image()
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    create_file(request, timestamp)
+
+    user_option = predict_option_from_image(timestamp)
 
     if user_option == GameOption.NOTHING:
         return Response(json.dumps({"errorMessage": "Shape not recognized"}), status=400)

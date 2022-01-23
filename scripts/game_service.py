@@ -7,12 +7,13 @@ from PIL import Image
 from scripts.dto.game_response import GameOption
 
 
-def create_file(request):
+def create_file(request, timestamp):
     image = request.data.decode()
     image = image.split(',', 1)[1]
 
     im = Image.open(BytesIO(base64.b64decode(image)))
-    im.save('image.bmp', 'BMP')
+    filename = timestamp + ".bmp"
+    im.save(filename, 'BMP')
 
 
 def get_random_computer_option():

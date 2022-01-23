@@ -8,11 +8,12 @@ from scripts.dto.game_response import GameOption
 
 
 # TODO: first version, needs refactor
-def predict_option_from_image():
+def predict_option_from_image(timestamp):
     model = load_model('model/keras_model.h5')
 
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-    image = Image.open('image.bmp')
+    filename = timestamp + ".bmp"
+    image = Image.open(filename)
     size = (224, 224)
     image = ImageOps.fit(image, size)
 
@@ -22,5 +23,5 @@ def predict_option_from_image():
 
     prediction = model.predict(data)
     max_index = prediction.argmax()
-    os.remove('image.bmp')
+    os.remove(filename)
     return GameOption(max_index)
