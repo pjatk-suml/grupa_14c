@@ -29,8 +29,13 @@ const takeScreenshot = () => {
                 },
                 body: dataUrl
             })
-                .then(response => response.json())
-                .then(data => console.log(data)) //TODO: handle response
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(response => {throw new Error(response.errorMessage)})
+                    }
+                    return response.json()
+                })
+                .then(response => console.log(response))
                 .catch(error => alert(error.message));
         } else {
             countdown.innerHTML = count;
