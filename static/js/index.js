@@ -2,31 +2,25 @@ import {isUserWinner} from "./game.js";
 
 let video = document.querySelector("#videoElement");
 let screenshot = document.querySelector("#screenshot");
-let image = document.querySelector("#image");
 let countdown = document.querySelector("#countdown");
 
 const host = `${window.location.protocol}//${window.location.host}`;
 
 const takeScreenshot = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    let count = 0;
+    let count = 3;
     const timer = setInterval(() => {
         if (count === 0) {
             clearInterval(timer);
-
             countdown.innerHTML = "";
-            canvas.getContext('2d')
-                .drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL();
-            image.src = dataUrl;
 
-            sendImage(dataUrl)
+            const base64Image = getImageFromVideo();
+            video.pause();
+
+            sendImage(base64Image)
                 .then(processStatus)
                 .then(handleResponse)
-                .catch(handleError);
+                .catch(handleError)
+                .finally(resumeVideo);
         } else {
             countdown.innerHTML = count;
             count--;
@@ -44,7 +38,7 @@ if (navigator.mediaDevices.getUserMedia) {
     alert("You need webcam to use this application");
 }
 
-const sendImage = dataUrl => {
+const sendImage = base64Image => {
     return fetch(`${host}/game`, {
         method: 'POST',
         mode: 'no-cors',
@@ -52,8 +46,18 @@ const sendImage = dataUrl => {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: dataUrl
+        body: base64Image
     });
+}
+
+const getImageFromVideo = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    canvas.getContext('2d')
+        .drawImage(video, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL();
 }
 
 const processStatus = response => {
@@ -68,12 +72,14 @@ const processStatus = response => {
 const handleResponse = response => {
     let message = `Your shape: ${response.user_option} Computer shape: ${response.computer_option}`;
     const isWinner = isUserWinner(response.user_option, response.computer_option);
-    if (isWinner === null) {
-        message += ` It's a draw!`;
-    } else if (isWinner) {
-        message += ` You won!`;
+    if (isWinner !== null) {
+        if (isWinner) {
+            message += ` You won!`;
+        } else {
+            message += ` You lost.`;
+        }
     } else {
-        message += ` You lost.`;
+        message += ` It's a draw!`;
     }
 
     alert(message);
@@ -81,4 +87,8 @@ const handleResponse = response => {
 
 const handleError = error => {
     alert(error.message);
+}
+
+const resumeVideo = () => {
+    video.load();
 }
