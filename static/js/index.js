@@ -1,3 +1,5 @@
+import {isUserWinner} from "./game.js";
+
 let video = document.querySelector("#videoElement");
 let screenshot = document.querySelector("#screenshot");
 let image = document.querySelector("#image");
@@ -35,7 +37,11 @@ const takeScreenshot = () => {
                     }
                     return response.json()
                 })
-                .then(response => console.log(response))
+                .then(response => {
+                    console.log(response)
+                    let winner = isUserWinner(response.user_option, response.computer_option);
+                    console.log(winner);
+                })
                 .catch(error => alert(error.message));
         } else {
             countdown.innerHTML = count;
