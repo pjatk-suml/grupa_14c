@@ -82,8 +82,10 @@ const handleResponse = response => {
     if (isWinner !== null) {
         if (isWinner) {
             message += ` You won!`;
+            document.getElementById("winCount").innerText = parseInt(winCount.innerHTML) + 1;
         } else {
             message += ` You lost.`;
+            //document.getElementById("winCount").innerText = parseInt(winCount.innerHTML) -1;  odejmowanie jak przegra?
         }
     } else {
         message += ` It's a draw!`;
