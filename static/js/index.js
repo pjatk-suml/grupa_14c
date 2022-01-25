@@ -4,8 +4,9 @@ let video = document.querySelector("#videoElement");
 let screenshot = document.querySelector("#screenshot");
 let countdown = document.querySelector("#countdown");
 
-let successAlert = $("#success-alert");
-let failureAlert = $("#failure-alert");
+const successAlert = $("#success-alert");
+const failureAlert = $("#failure-alert");
+const loading = $("#loading-icon");
 
 const host = `${window.location.protocol}//${window.location.host}`;
 
@@ -18,7 +19,9 @@ const takeScreenshot = () => {
             countdown.innerHTML = "";
 
             const base64Image = getImageFromVideo();
+
             video.pause();
+            loading.show();
 
             sendImage(base64Image)
                 .then(processStatus)
@@ -98,6 +101,8 @@ const handleError = error => {
 }
 
 const resumeVideo = () => {
+    loading.hide();
     video.load();
     screenshot.disabled = false;
+    countdown.innerHTML = "";
 }

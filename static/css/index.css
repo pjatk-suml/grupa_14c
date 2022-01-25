@@ -9,6 +9,7 @@
     justify-content: center;
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
 }
 
 .video-container>button {
@@ -19,4 +20,17 @@
 .alert {
     display: none;
     text-align: center;
+}
+
+#loading-icon {
+    position: absolute;
+    width: 7rem;
+    height: 7rem;
+    display: none;
+}
+
+#countdown {
+    position: absolute;
+    font-size: 150px;
+    color: rgba(0, 0, 0, 0.5);
 }
