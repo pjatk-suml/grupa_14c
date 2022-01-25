@@ -15,3 +15,8 @@
     margin-top: 15px;
     width: 500px;
 }
+
+.alert {
+    display: none;
+    text-align: center;
+}

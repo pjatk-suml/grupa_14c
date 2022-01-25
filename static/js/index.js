@@ -4,9 +4,13 @@ let video = document.querySelector("#videoElement");
 let screenshot = document.querySelector("#screenshot");
 let countdown = document.querySelector("#countdown");
 
+let successAlert = $("#success-alert");
+let failureAlert = $("#failure-alert");
+
 const host = `${window.location.protocol}//${window.location.host}`;
 
 const takeScreenshot = () => {
+    screenshot.disabled = true;
     let count = 3;
     const timer = setInterval(() => {
         if (count === 0) {
@@ -82,13 +86,18 @@ const handleResponse = response => {
         message += ` It's a draw!`;
     }
 
-    alert(message);
+    successAlert.text(message);
+    successAlert.show()
+    setTimeout(() => successAlert.hide(), 7000);
 }
 
 const handleError = error => {
-    alert(error.message);
+    failureAlert.text(error.message);
+    failureAlert.show();
+    setTimeout(() => failureAlert.hide(), 5000);
 }
 
 const resumeVideo = () => {
     video.load();
+    screenshot.disabled = false;
 }
