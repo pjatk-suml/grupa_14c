@@ -2,6 +2,8 @@
     width: 500px;
     height: 375px;
     background-color: #666;
+    
+    
 }
 
 .video-container {
@@ -33,4 +35,31 @@
     position: absolute;
     font-size: 150px;
     color: rgba(0, 0, 0, 0.5);
+}
+body {
+    background-image: url("https://thumbs.dreamstime.com/b/kids-game-rock-paper-scissors-pattern-white-background-134992609.jpg");
+    background-repeat: repeat, repeat;
+    background-color: #cccccc;
+    display: inline;
+    margin: 0px;
+    
+  }
+
+.wins{
+    font-size: larger;
+    font-weight: bold;
+    background-color: #cccccc70;
+   
+}
+
+.title{
+    background-color: #cccccc70;
+    font-size: larger;
+    font-weight: bold;
+    color:black;
+    font-size: 20px;
+}
+.imageElement{
+    
+    font-size:8rem;
 }

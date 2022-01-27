@@ -3,6 +3,7 @@ import {isUserWinner} from "./game.js";
 let video = document.querySelector("#videoElement");
 let screenshot = document.querySelector("#screenshot");
 let countdown = document.querySelector("#countdown");
+let imgEmoji = document.querySelector("#imageElement")
 
 const successAlert = $("#success-alert");
 const failureAlert = $("#failure-alert");
@@ -77,6 +78,38 @@ const processStatus = response => {
 }
 
 const handleResponse = response => {
+
+    if(response.user_option === 'ROCK'){
+        imgEmoji = document.getElementById("imageElement").innerText = ""
+        imgEmoji = document.querySelector("#imageElement");
+        imgEmoji.style.display = "block"
+
+        imgEmoji = document.getElementById("imageElement").innerText = "✊";        
+        video.style.display = "none"
+        imgEmoji = document.querySelector("#imageElement");
+        setTimeout(() => ((imgEmoji.style.display = "none")), 4000)
+    }
+    else if(response.user_option === 'PAPER'){
+        imgEmoji = document.getElementById("imageElement").innerText = ""
+        imgEmoji = document.querySelector("#imageElement");
+        imgEmoji.style.display = "block"
+
+        imgEmoji = document.getElementById("imageElement").innerText = "✋";
+        video.style.display = "none"
+        imgEmoji = document.querySelector("#imageElement");
+        setTimeout(() => ((imgEmoji.style.display = "none")), 4000)
+    }
+    else if(response.user_option === 'SCISSORS'){
+        imgEmoji = document.getElementById("imageElement").innerText = ""
+        imgEmoji = document.querySelector("#imageElement");
+        imgEmoji.style.display = "block"
+
+        imgEmoji = document.getElementById("imageElement").innerText = "✂️";
+        video.style.display = "none"
+        imgEmoji = document.querySelector("#imageElement");
+        setTimeout(() => ((imgEmoji.style.display = "none")), 4000)
+    }
+
     let message = `Your shape: ${response.user_option} Computer shape: ${response.computer_option}`;
     const isWinner = isUserWinner(response.user_option, response.computer_option);
     if (isWinner !== null) {
@@ -93,6 +126,7 @@ const handleResponse = response => {
 
     successAlert.text(message);
     successAlert.show()
+    setTimeout(() => ((video.style.display = "block")), 3000)
     setTimeout(() => successAlert.hide(), 7000);
 }
 
