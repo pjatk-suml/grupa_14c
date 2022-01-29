@@ -11,3 +11,13 @@ export const isUserWinner = (userShape, computerShape) => {
         return computerShape === 'PAPER';
     }
 }
+
+export const getShapeAsEmoji = shape => {
+    if (shape === 'ROCK') {
+        return "✊"
+    } else if (shape === 'PAPER') {
+        return "✋"
+    } else {
+        return "✂"
+    }
+}

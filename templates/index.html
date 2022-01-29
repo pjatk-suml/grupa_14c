@@ -8,17 +8,29 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+
 <div id="container" class="video-container">
-    <label class="title">Rock papper scissors</label>
-    <video autoplay="true" id="videoElement" class="videoElement"></video>
-    <p id="imageElement" class="imageElement"> </p>
+    <h2 class="title">Rock papper scissors</h2>
+    <div class="shapes-div">
+        <div class="single-shape">
+            <h4>User shape</h4>
+            <p id="userShape" class="imageElement"></p>
+        </div>
+
+        <video autoplay="true" id="videoElement" class="videoElement"></video>
+
+        <div class="single-shape">
+            <h4>Computer shape</h4>
+            <p id="computerShape" class="imageElement"></p>
+        </div>
+    </div>
     <button id="screenshot" class="btn btn-primary">start</button>
     <p id="countdown" class="text-monospace"></p>
     <div id="loading-icon" class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
     </div>
-    <label class="wins">Ilosc wygranych</label>
-    <label  class="wins" id="winCount">0</label>
+    <span class="wins">Number of wins</span>
+    <span class="wins" id="winCount">0</span>
 </div>
 
 <div id="success-alert" class="alert alert-primary show" role="alert"></div>
