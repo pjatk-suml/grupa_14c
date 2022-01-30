@@ -1,7 +1,7 @@
 import {getShapeAsEmoji, isUserWinner} from "./game.js";
 
 let video = document.querySelector("#videoElement");
-let screenshot = document.querySelector("#screenshot");
+let screenshotButton = document.querySelector("#screenshot");
 let countdown = document.querySelector("#countdown");
 let userShape = document.querySelector("#userShape");
 let computerShape = document.querySelector("#computerShape");
@@ -14,8 +14,9 @@ const loading = $("#loading-icon");
 const host = `${window.location.protocol}//${window.location.host}`;
 
 const takeScreenshot = () => {
-    screenshot.disabled = true;
+    screenshotButton.disabled = true;
     let count = 3;
+    //Displaying countdown, after 3 seconds making REST call to backend
     const timer = setInterval(() => {
         if (count === 0) {
             clearInterval(timer);
@@ -32,13 +33,13 @@ const takeScreenshot = () => {
                 .catch(handleError)
                 .finally(resumeVideo);
         } else {
-            countdown.innerHTML = count;
+            countdown.innerText = count;
             count--;
         }
     }, 1000);
 }
 
-screenshot.addEventListener("click", takeScreenshot);
+screenshotButton.addEventListener("click", takeScreenshot);
 
 if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({video: true})
@@ -80,7 +81,8 @@ const processStatus = response => {
 }
 
 const handleResponse = response => {
-    let message = `Your shape: ${response.user_option} Computer shape: ${response.computer_option}`;
+    let message = `Your shape: ${response.user_option}. Computer shape: ${response.computer_option}.`;
+
     const isWinner = isUserWinner(response.user_option, response.computer_option);
     if (isWinner !== null) {
         if (isWinner) {
@@ -88,7 +90,6 @@ const handleResponse = response => {
             document.getElementById("winCount").innerText = parseInt(winCount.innerHTML) + 1;
         } else {
             message += ` You lost.`;
-            //document.getElementById("winCount").innerText = parseInt(winCount.innerHTML) -1;  odejmowanie jak przegra?
         }
     } else {
         message += ` It's a draw!`;
@@ -99,22 +100,22 @@ const handleResponse = response => {
 
     userShape.innerText = getShapeAsEmoji(response.user_option);
     computerShape.innerText = getShapeAsEmoji(response.computer_option);
+    //Make divs visible (initially their display is set to none)
     singleShapes.forEach(shape => shape.style.display = 'block')
 
-    setTimeout(() => ((video.style.display = "block")), 3000)
     setTimeout(() => successAlert.hide(), 7000);
 }
 
 const handleError = error => {
     failureAlert.text(error.message);
     failureAlert.show();
-    setTimeout(() => failureAlert.hide(), 5000);
+    setTimeout(() => failureAlert.hide(), 7000);
 }
 
 const resumeVideo = () => {
     loading.hide();
     video.load();
-    screenshot.disabled = false;
+    screenshotButton.disabled = false;
     countdown.innerHTML = "";
     singleShapes.forEach(shape => setTimeout(() => shape.style.display = 'none', 7000))
 }
